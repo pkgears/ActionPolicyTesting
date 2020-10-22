@@ -1,9 +1,9 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :change_user]
   # GET /posts
   # GET /posts.json
   def index
-    @posts = current_user.posts
+    @posts = Post.all
   end
 
   # GET /posts/1
@@ -18,6 +18,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
+    authorize! @post
   end
 
   # POST /posts
@@ -48,6 +49,10 @@ class PostsController < ApplicationController
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def change_user
+    authorize! @post
   end
 
   # DELETE /posts/1

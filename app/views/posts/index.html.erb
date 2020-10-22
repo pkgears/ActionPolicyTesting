@@ -18,9 +18,16 @@
         <td><%= post.title %></td>
         <td><%= post.body %></td>
         <td><%= post.user.email %></td>
+        <% if allowed_to?(:change_user?, post) %>
+          <td><%= link_to 'Change user', change_user_post_path(post) %></td>
+        <% end %>
         <td><%= link_to 'Show', post %></td>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if allowed_to?(:edit?, post) %>
+          <td><%= link_to 'Edit', edit_post_path(post) %></td>
+        <% end %>
+        <% if allowed_to?(:destroy?, post) %>
+          <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

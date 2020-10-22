@@ -5,4 +5,14 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :posts
+
+  #before_create :set_role
+
+  enum role: %w[admin editor viewer]
+
+  private
+
+  def set_role
+    viewer!
+  end
 end
